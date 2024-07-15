@@ -1,6 +1,6 @@
 export default function Page() {
   return (<>
-  <h1>Hello world</h1>
+  <h1>This Is Profile Page</h1>
   </>
    
   );
