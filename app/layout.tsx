@@ -1,3 +1,4 @@
+import { Header } from './_components/Header';
 import Logo from './_components/Logo'
 import Navigation from './_components/Navigation'
 import "@/app/_styles/globals.css"
@@ -27,13 +28,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${josefin.className} bg-primary-950 text-primary-100 min-h-screen`}>
-        <header className='m-1 sm:m-16'>
-          <Logo/>
-          <Navigation />
-          </header>
+      <body className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col`}>
+        <Header/>
+    <main className='flex-1 max-w-7xl mx-auto py-7 px-5 bg-red-400'>
+          {children}
+    </main>
 
-        {children}
         <footer> Copyright by the Wild Oasis</footer>
       </body>
     </html>
