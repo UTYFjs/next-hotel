@@ -1,6 +1,10 @@
 import { ReservationCard } from '@/app/_components/ReservationCard';
-import { bookingMock, BookingType } from '@/app/types/dataTypes';
+import { bookingMock, BookingType } from '@/app/_types/dataTypes';
 import Link from 'next/link';
+
+export const metadata = {
+  title: 'Reservations'
+}
 
 export default  function Page(){
   const bookings: BookingType[] = [bookingMock];

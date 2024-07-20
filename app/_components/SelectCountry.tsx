@@ -1,5 +1,5 @@
 import React from 'react'
-import { countryMock, CountryType } from '../types/dataTypes';
+import { countryMock, CountryType } from '../_types/dataTypes';
 
 type SelectCountryProps = {
   defaultCountry: string;

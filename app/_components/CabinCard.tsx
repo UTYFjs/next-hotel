@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CabinType } from '../types/dataTypes';
+import { CabinType } from '../_types/dataTypes';
 import { UsersIcon } from "@heroicons/react/24/solid";
 
 export type CabinCardProps = {

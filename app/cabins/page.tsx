@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import Counter from '../_components/Counter';
-import { cabinMock, CabinType } from '../types/dataTypes';
+import { cabinMock, CabinType } from '../_types/dataTypes';
 import { CabinCard } from '../_components/CabinCard';
 
 type GeoLocation = {

@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col`}>
         <Header/>
-        <main className='flex-1 max-w-7xl mx-auto py-10 px-5 '>
+        <main className=' grid flex-1 max-w-7xl mx-auto py-10 px-5 w-full'>
           {children}
         </main>
         <footer> Copyright by the Wild Oasis</footer>
