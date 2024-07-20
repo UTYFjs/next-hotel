@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Counter from '../_components/Counter';
 import { cabinMock, CabinType } from '../_types/dataTypes';
 import { CabinCard } from '../_components/CabinCard';
+import { getCabins } from '../_lib/data-service';
 
 type GeoLocation = {
   lat: string;
@@ -42,7 +43,7 @@ export default async function Page() {
   const res = await fetch('https://jsonplaceholder.typicode.com/users')
   const data: User[] = await res.json();
   // CHANGE
-  const cabins: CabinType[] = [cabinMock];
+  const cabins: CabinType[] =  await getCabins();  //[cabinMock];
   //console.log(data)
   return (<>
     <h1 className="text-4xl mb-5 text-accent-400 font-medium">
