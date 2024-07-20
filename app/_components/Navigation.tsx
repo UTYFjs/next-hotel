@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export default function Navigation(){
-  return <ul className='flex gap-5 text-xl'>
+  return <ul className='flex z-10 gap-5 text-xl mx-10'>
     <li>
       <Link href='/' className='hover:text-accent-400 transition-colors'>Home</Link>
     </li>
@@ -10,6 +10,9 @@ export default function Navigation(){
     </li>
     <li>
       <Link href='/about' className='hover:text-accent-400 transition-colors'>About</Link>
+    </li>
+    <li>
+      <Link href='/account' className='hover:text-accent-400 transition-colors'>Account</Link>
     </li>
     <li>
       <Link href='/profile' className='hover:text-accent-400 transition-colors'>Profile</Link>
