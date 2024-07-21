@@ -10,9 +10,7 @@ const josefin = Josefin_Sans({
   display: 'swap'
 })
 
-console.log('josefin', josefin)
 export const metadata = {
-  //title: 'The Wild Oasis',
   title: {
     template: "%s / The Wild Oasis",
     default: "Welcome / The Wild Oasis",

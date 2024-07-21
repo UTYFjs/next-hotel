@@ -1,51 +1,44 @@
-import Link from 'next/link';
+import { CabinList } from '../_components/CabinList';
+import { Suspense } from 'react';
+import SpinnerMini from '../_components/SpinnerMini';
+import Spinner from '../_components/Spinner';
 
-import Counter from '../_components/Counter';
-import { cabinMock, CabinType } from '../_types/dataTypes';
-import { CabinCard } from '../_components/CabinCard';
-import { getCabins } from '../_lib/data-service';
+// type GeoLocation = {
+//   lat: string;
+//   lng: string;
+// };
 
-type GeoLocation = {
-  lat: string;
-  lng: string;
-};
+// type Address = {
+//   street: string;
+//   suite: string;
+//   city: string;
+//   zipcode: string;
+//   geo: GeoLocation;
+// };
 
-type Address = {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: GeoLocation;
-};
+// type Company = {
+//   name: string;
+//   catchPhrase: string;
+//   bs: string;
+// };
 
-type Company = {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-};
-
-export type User = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: Address;
-  phone: string;
-  website: string;
-  company: Company;
-};
+// export type User = {
+//   id: number;
+//   name: string;
+//   username: string;
+//   email: string;
+//   address: Address;
+//   phone: string;
+//   website: string;
+//   company: Company;
+// };
 
 export const metadata = {
   title: 'Cabins'
 }
 export default async function Page() {
-
-  const res = await fetch('https://jsonplaceholder.typicode.com/users')
-  const data: User[] = await res.json();
-  // CHANGE
-  const cabins: CabinType[] =  await getCabins();  //[cabinMock];
-  //console.log(data)
-  return (<>
+  return (
+  <div>
     <h1 className="text-4xl mb-5 text-accent-400 font-medium">
       Our Luxury Cabins
     </h1>
@@ -57,17 +50,8 @@ export default async function Page() {
       home away from home. The perfect spot for a peaceful, calm vacation.
       Welcome to paradise.
     </p>
-    {cabins.length > 0 && (
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
-        {cabins.map((cabin) => (
-          <CabinCard cabin={cabin} key={cabin.id} />
-        ))}
-      </div>
-    )}
-    <h1>Cabins PAge</h1>
-    <ul>{data.map((user) => (<li key={user.id}>{user.name}</li>))}</ul>
-    <Counter users={data}/>
-  </>
+      <Suspense fallback={<Spinner/>}><CabinList /></Suspense>
+    </div>
 
   );
 }
