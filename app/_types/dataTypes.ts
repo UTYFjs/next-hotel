@@ -5,6 +5,7 @@ export type CabinType = {
   regularPrice: number;
   discount: number;
   image: string;
+  description?: string;
 }
 
 export type BookingType = {
