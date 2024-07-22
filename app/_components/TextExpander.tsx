@@ -1,11 +1,13 @@
 'use client'
 import { useState } from 'react';
 type TextExpanderProps = {
-  children: string
+  children: string | null
 }
 
 function TextExpander({ children }:TextExpanderProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  if(children === null) return null;
+  console.log('children', children);
   const displayText = isExpanded
     ? children
     : children.split(' ').slice(0, 40).join(' ') + '...';
