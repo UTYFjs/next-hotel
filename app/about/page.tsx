@@ -1,7 +1,11 @@
 import Image from "next/image";
 import image1 from "@/public/about-1.jpg";
+import { getCabins } from '../_lib/data-service';
 
-export default function Page() {
+export const revalidate = 86400;
+
+export default async function Page() {
+const cabins = await getCabins()
   return  (
     <div className="grid grid-cols-5 gap-x-10 gap-y-12 text-lg items-center">
       <div className="col-span-3">
@@ -18,7 +22,7 @@ export default function Page() {
             and enjoying simple pleasures with family.
           </p>
           <p>
-            Our 8 luxury cabins provide a cozy base, but the real freedom and
+            Our {cabins.length} luxury cabins provide a cozy base, but the real freedom and
             peace you&apos;ll find in the surrounding mountains. Wander through
             lush forests, breathe in the fresh air, and watch the stars twinkle
             above from the warmth of a campfire or your hot tub.

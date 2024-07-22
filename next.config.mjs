@@ -10,6 +10,7 @@ const nextConfig = {
       },
     ],
   },
+  // output: 'export', //for deploy SSG site - after build save website to 'out' folder, all assets - static
 };
 
 export default nextConfig;
