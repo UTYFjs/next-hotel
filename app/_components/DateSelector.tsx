@@ -1,26 +1,45 @@
 'use client'
-import { DayPicker } from "react-day-picker";
+import { DateRange, DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { CabinType, SettingsType } from '../_types/dataTypes';
+import { useState } from 'react';
+import { useReservation } from './ReservationContext';
+import { differenceInDays } from 'date-fns';
 
 type DateSelectorProps = {
   settings: SettingsType; 
   bookedDates: any[]; 
   cabin: CabinType;
 }
-
+// type RangeStateType ={
+//    from: undefined | Date;
+//      to: undefined | Date;
+//     }
 export const DateSelector = ({ settings, bookedDates, cabin }: DateSelectorProps) =>  {
+  //const [range, setRange] = useState<DateRange | undefined>({from: undefined, to: undefined})
+  const {range, setRange, resetRange} = useReservation()
+ 
   // CHANGE
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
-  const range = { from: null, to: null };
+  const {regularPrice, discount} = cabin
+
+  //let numNights = 0;
+  const numNights =  range?.to && range?.from ? differenceInDays(range?.to, range?.from) : 0;
+  const cabinPrice = (regularPrice - discount)*numNights;
+
 
   // SETTINGS
   const { minBookingLength, maxBookingLength } = settings;
+  // console.log('settings', settings)
 
+  // const handleOnSelect = (rangeSelect: DateRange) => {
 
+  //   if(rangeSelect.from === range?.from ){ resetRange()}
+  //   else {
+  //     if (setRange) { setRange(rangeSelect) }
+  //   }
+    
+ 
+  // }
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
@@ -28,6 +47,14 @@ export const DateSelector = ({ settings, bookedDates, cabin }: DateSelectorProps
         mode="range"
         min={minBookingLength + 1}
         max={maxBookingLength}
+        onSelect={(range)=> {
+          if(setRange){
+            console.log('range', range)
+             setRange(range)
+          }
+
+          }}
+        selected={range}
         fromMonth={new Date()}
         fromDate={new Date()}
         toYear={new Date().getFullYear() + 5}
@@ -63,7 +90,7 @@ export const DateSelector = ({ settings, bookedDates, cabin }: DateSelectorProps
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={() => resetRange()}
