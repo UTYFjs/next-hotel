@@ -1,5 +1,5 @@
 import React from 'react'
-import { countryMock, CountryType } from '../_types/dataTypes';
+import { CountryType } from '../_types/dataTypes';
 import { getCountries } from '../_lib/data-service';
 
 type SelectCountryProps = {
