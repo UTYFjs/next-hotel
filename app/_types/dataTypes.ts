@@ -24,6 +24,16 @@ export type BookingType = {
 export type CountryType = {
   name: string;
   flag: string;
+  independent: boolean;
+};
+
+export type SettingsType = {
+  id: string;
+  created_at: string;
+  minBookingLength: number;
+  maxBookingLength: number;
+  maxGuestsPerBooking: number;
+  breakfastPrice: number;
 };
 
 
@@ -47,5 +57,3 @@ export const cabinMock: CabinType = {
   discount: 10,
   image: '/logo.png',
 };
-
-export const countryMock: CountryType = { name: 'Belarus', flag: 'belarusFlag' };

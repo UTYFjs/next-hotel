@@ -1,6 +1,6 @@
 import { eachDayOfInterval } from 'date-fns';
 import { supabase } from './supabase';
-import { CabinType } from '../_types/dataTypes';
+import { CabinType, CountryType, SettingsType } from '../_types/dataTypes';
 import { notFound } from 'next/navigation';
 
 // GET
@@ -21,10 +21,6 @@ export async function getCabin(id: string): Promise<CabinType> {
 }
 
 export const getCabins = async function (): Promise<CabinType[]> {
-  // const { data, error } = await supabase
-  //   .from('cabins')
-  //   .select('id, name, maxCapacity, regularPrice, discount, image')
-  //   .order('name');
    let { data, error } = await supabase.from('cabins').select('*').order('name');
 // await new Promise((res) => setTimeout(res, 2000));
   if (error) {
@@ -120,9 +116,9 @@ export async function getBookedDatesByCabinId(cabinId: string) {
   return bookedDates;
 }
 
-export async function getSettings() {
+export async function getSettings(): Promise<SettingsType> {
   const { data, error } = await supabase.from('settings').select('*').single();
-
+  // await new Promise((res) => setTimeout(res, 5000));
   if (error) {
     console.error(error);
     throw new Error('Settings could not be loaded');
@@ -132,7 +128,7 @@ export async function getSettings() {
 }
 
 
-export async function getCountries() {
+export async function getCountries(): Promise<CountryType[]> {
   try {
     const res = await fetch(
       'https://restcountries.com/v2/all?fields=name,flag'

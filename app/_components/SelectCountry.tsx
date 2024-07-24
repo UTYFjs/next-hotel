@@ -1,5 +1,6 @@
 import React from 'react'
 import { countryMock, CountryType } from '../_types/dataTypes';
+import { getCountries } from '../_lib/data-service';
 
 type SelectCountryProps = {
   defaultCountry: string;
@@ -8,8 +9,8 @@ type SelectCountryProps = {
   className: string;
 }
 
-export const SelectCountry = ({ defaultCountry, name, id, className }: SelectCountryProps) => {
-  const countries: Array<CountryType> = [countryMock] // await getCountries();
+export const SelectCountry = async ({ defaultCountry, name, id, className }: SelectCountryProps) => {
+  const countries: Array<CountryType> = await getCountries();
   const flag =
     countries.find((c) => c.name === defaultCountry)?.flag ?? '';
 
