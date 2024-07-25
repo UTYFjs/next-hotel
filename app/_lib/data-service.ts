@@ -1,6 +1,6 @@
 import { eachDayOfInterval } from 'date-fns';
 import { supabase } from './supabase';
-import { CabinType, CountryType, SettingsType } from '../_types/dataTypes';
+import { CabinType, CountryType, GuestType, SettingsType } from '../_types/dataTypes';
 import { notFound } from 'next/navigation';
 
 // GET
@@ -48,7 +48,7 @@ export async function getCabinPrice(id: string) {
 }
 
 // Guests are uniquely identified - email address
-export async function getGuest(email: string) {
+export async function getGuest(email: string | null | undefined) {
   const { data, error } = await supabase
     .from('guests')
     .select('*')
@@ -142,16 +142,16 @@ export async function getCountries(): Promise<CountryType[]> {
 
 // CREATE
 
-// export async function createGuest(newGuest) {
-//   const { data, error } = await supabase.from('guests').insert([newGuest]);
+export async function createGuest(newGuest: Pick<GuestType, 'fullName' | 'email'>) {
+  const { data, error } = await supabase.from('guests').insert([newGuest]);
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Guest could not be created');
-//   }
+  if (error) {
+    console.error(error);
+    throw new Error('Guest could not be created');
+  }
 
-//   return data;
-// }
+  return data;
+}
 
 // export async function createBooking(newBooking) {
 //   const { data, error } = await supabase

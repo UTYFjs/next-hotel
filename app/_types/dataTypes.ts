@@ -37,6 +37,16 @@ export type SettingsType = {
 };
 
 
+export type GuestType = {
+  id: string;
+  created_at: string;
+  fullName: string;
+  email: string;
+  nationality: string;
+  countryFlag: string;
+  nationalID: string;
+}
+
 export const bookingMock: BookingType = {
   id: 'id booking',
   guestId: 'id guest',
