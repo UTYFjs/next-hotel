@@ -48,7 +48,7 @@ export async function getCabinPrice(id: string) {
 }
 
 // Guests are uniquely identified - email address
-export async function getGuest(email: string | null | undefined) {
+export async function getGuest(email: string | null | undefined): Promise<GuestType> {
   const { data, error } = await supabase
     .from('guests')
     .select('*')
@@ -172,7 +172,7 @@ export async function createGuest(newGuest: Pick<GuestType, 'fullName' | 'email'
 // // UPDATE
 
 // // updatedFields an object which should ONLY contain the updated data
-// export async function updateGuest(id: string, updatedFields) {
+// export async function updateGuest(id: string, updatedFields: Partial<GuestType>) {
 //   const { data, error } = await supabase
 //     .from('guests')
 //     .update(updatedFields)

@@ -1,31 +1,39 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image';
+import { GuestType } from '../_types/dataTypes';
+import { updateProfile } from '../_lib/actions';
 
 type UpdateProfileFormProps ={
+  guest: GuestType;
 children: React.ReactNode
 }
-const UpdateProfileForm = ({ children }: UpdateProfileFormProps) => {
+const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
+  const {fullName, email, nationality, nationalID, countryFlag} = guest
   const [count, setCount] = useState()
-  const countryFlag = "/logo.png";
+  //const countryFlag = "/logo.png";
 
 
 
   return (
-    <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+    <form action={updateProfile} className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
       <div className="space-y-2">
         <label>Full name</label>
         <input
+        name='fullName'
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          defaultValue={fullName}
         />
       </div>
 
       <div className="space-y-2">
         <label>Email address</label>
         <input
+        name='email'
           disabled
           className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm disabled:cursor-not-allowed disabled:bg-gray-600 disabled:text-gray-400"
+          defaultValue={email}
         />
       </div>
 
@@ -34,7 +42,7 @@ const UpdateProfileForm = ({ children }: UpdateProfileFormProps) => {
           <label htmlFor="nationality">Where are you from?</label>
           <div className='relative aspect-square w-10 h-10'>
             <Image
-              src={countryFlag}
+              src={countryFlag || ''}
               fill
               alt="Country flag"
               className="h-5 rounded-sm object-cover"
@@ -48,8 +56,9 @@ const UpdateProfileForm = ({ children }: UpdateProfileFormProps) => {
       <div className="space-y-2">
         <label htmlFor="nationalID">National ID number</label>
         <input
-          name="nationalID"
-          className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+        name='nationalID'
+        defaultValue={nationalID}
+        className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
         />
       </div>
 
