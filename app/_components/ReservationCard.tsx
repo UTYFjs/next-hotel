@@ -3,6 +3,8 @@ import { format, formatDistance, isPast, isToday, parseISO } from "date-fns";
 import { DeleteReservation } from './DeleteReservation';
 import { BookingType } from '../_types/dataTypes';
 import Image from 'next/image';
+import Link from 'next/link';
+import { Paths } from '../_constants/paths';
 
 
 export const formatDistanceFromNow = (dateStr: string) =>
@@ -75,14 +77,17 @@ export const ReservationCard = ({ booking }:ReservationCardProps) => {
       </div>
 
       <div className="flex flex-col border-l border-primary-800 w-[100px]">
-        <a
-          href={`/account/reservations`}
+        {!isPast(startDate) ? 
+        <>
+        <Link
+          href={`${Paths.ACCOUNT_RESERVATION_EDIT}/${id}`}
           className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
         >
           <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
           <span className="mt-1">Edit</span>
-        </a>
-        <DeleteReservation bookingId={id} />
+        </Link>
+          <DeleteReservation bookingId={id} /> </>
+          : null}
       </div>
     </div>
   );

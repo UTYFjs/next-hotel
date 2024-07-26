@@ -1,6 +1,6 @@
 import { eachDayOfInterval } from 'date-fns';
 import { supabase } from './supabase';
-import { CabinType, CountryType, GuestType, SettingsType } from '../_types/dataTypes';
+import { BookingType, CabinType, CountryType, GuestType, SettingsType } from '../_types/dataTypes';
 import { notFound } from 'next/navigation';
 
 // GET
@@ -71,21 +71,25 @@ export async function getBooking(id: string) {
   return data;
 }
 
-export async function getBookingsByGuest(guestId: string) {
-  const { data, error, count } = await supabase
-    .from('bookings')
-    .select(
-      'id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)'
-    )
-    .eq('guestId', guestId)
-    .order('startDate');
+export async function getBookingsByGuest(guestId: string): Promise<BookingType[]>  {
+  // console.log('guestId222', guestId);
 
-  if (error) {
-    console.error(error);
-    throw new Error('Bookings could not get loaded');
-  }
+const { data, error, count } = await supabase
+  .from('bookings')
+  .select(
+    'id, created_at, startDate, endDate, numberNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image), status'
+  )
+  .eq('guestId', guestId)
+  .order('startDate');
 
-  return data;
+if (error) {
+  console.error(error);
+  throw new Error('Bookings could not get loaded');
+}
+
+  return data as unknown as BookingType[];
+
+  
 }
 
 export async function getBookedDatesByCabinId(cabinId: string) {
@@ -202,14 +206,14 @@ export async function createGuest(newGuest: Pick<GuestType, 'fullName' | 'email'
 //   return data;
 // }
 
-// // DELETE
+// DELETE
 
-// export async function deleteBooking(id:string) {
-//   const { data, error } = await supabase.from('bookings').delete().eq('id', id);
+export async function deleteBooking(id:string) {
+  const { data, error } = await supabase.from('bookings').delete().eq('id', id);
 
-//   if (error) {
-//     console.error(error);
-//     throw new Error('Booking could not be deleted');
-//   }
-//   return data;
-// }
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not be deleted');
+  }
+  return data;
+}

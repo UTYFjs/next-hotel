@@ -1,14 +1,17 @@
 import { ReservationCard } from '@/app/_components/ReservationCard';
 import { Paths } from '@/app/_constants/paths';
-import { bookingMock, BookingType } from '@/app/_types/dataTypes';
+import { auth } from '@/app/_lib/auth';
+import { getBookingsByGuest } from '@/app/_lib/data-service';
 import Link from 'next/link';
 
 export const metadata = {
   title: 'Reservations'
 }
 
-export default  function Page(){
-  const bookings: BookingType[] = [bookingMock];
+export default async function Page(){
+  const session = await auth();
+  const bookings = session?.user?.id ? await getBookingsByGuest(session?.user?.id): [];
+// console.log('booking', bookings)
 
   return (
     <div>
@@ -16,7 +19,7 @@ export default  function Page(){
         Your reservations
       </h2>
 
-      {bookings.length === 0 ? (
+      {bookings?.length === 0 ? (
         <p className="text-lg">
           You have no reservations yet. Check out our{" "}
           <Link className="underline text-accent-500" href={Paths.CABINS}>

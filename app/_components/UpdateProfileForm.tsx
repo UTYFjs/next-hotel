@@ -1,8 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image';
 import { GuestType } from '../_types/dataTypes';
 import { updateProfile } from '../_lib/actions';
+import { useFormStatus } from 'react-dom';
 
 type UpdateProfileFormProps ={
   guest: GuestType;
@@ -10,10 +11,6 @@ children: React.ReactNode
 }
 const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
   const {fullName, email, nationality, nationalID, countryFlag} = guest
-  const [count, setCount] = useState()
-  //const countryFlag = "/logo.png";
-
-
 
   return (
     <form action={updateProfile} className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
@@ -45,7 +42,7 @@ const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
               src={countryFlag || ''}
               fill
               alt="Country flag"
-              className="h-5 rounded-sm object-cover"
+              className="h-5 rounded-md"
             /></div>
 
         </div>
@@ -63,12 +60,20 @@ const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
       </div>
 
       <div className="flex justify-end items-center gap-6">
-        <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
-          Update profile
-        </button>
+        <Button/>
       </div>
     </form>
   )
 }
+
+function Button() {
+  const {pending} = useFormStatus();
+
+  return (<button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+  disabled={pending}>
+    {pending? 'Updating...' : 'Update profile'}
+  </button>)
+}
+
 
 export default UpdateProfileForm
