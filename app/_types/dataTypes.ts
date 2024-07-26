@@ -14,10 +14,11 @@ export type BookingType = {
   cabinId: string;
   startDate: string;
   endDate: string;
-  numNights: number;
+  numberNights: number;
   totalPrice: number;
   numGuests: number;
   status: string;
+  observations: string;
   created_at: string;
   cabins: Pick<CabinType, 'name' | 'image'>;
 };

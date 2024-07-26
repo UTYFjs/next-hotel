@@ -4,6 +4,8 @@ import { auth, signIn, signOut } from './auth';
 import { supabase } from './supabase';
 import { Paths } from '../_constants/paths';
 import { getBookingsByGuest } from './data-service';
+import { BookingType } from '../_types/dataTypes';
+import { redirect } from 'next/navigation';
 
 export async function signInAction() {
   await signIn  ('google', { redirectTo: '/account' });
@@ -31,7 +33,6 @@ export async function updateProfile(formData: FormData){
      .update(updateData)
      .eq('id', session.user?.id)
 
-  // console.log('server action update profile', updateData, session?.user?.id);
    if (error) {
     console.log('error', error.message)
      throw new Error('Guest could not be updated');
@@ -41,6 +42,40 @@ export async function updateProfile(formData: FormData){
 
 }
 
+export async function updateReservation( bookingData: FormData ){
+  //1) autentication
+  const session = await auth();
+  if (!session) throw new Error('You must be logged in for delete reservation');
+  //2) authorisation
+  const guestBookings = session?.user?.id
+    ? await getBookingsByGuest(session.user.id)
+    : [];
+
+  const guestBookingIds = guestBookings.map((booking) => String(booking.id));
+
+  const bookingId = bookingData.get('bookingId') as string;
+  if (!guestBookingIds.includes(bookingId)) throw new Error('You are not allowed to update this booking');
+  //3) update data
+  const observations = (bookingData.get('observations') as string).slice(0, 1000);
+  const numGuests = Number(bookingData.get('numGuests'));
+  const updatedFields: Partial<BookingType> = { observations, numGuests  };
+
+  const { data, error } = await supabase
+    .from('bookings')
+    .update(updatedFields)
+    .eq('id', bookingId)
+// 4) error handling
+    if (error) {
+      console.error(error);
+      throw new Error('Booking could not be updated');
+    }
+
+    //5) revalidation
+      revalidatePath(`${Paths.ACCOUNT_RESERVATION_EDIT}/${bookingId}`);
+      revalidatePath(Paths.ACCOUNT_RESERVATION);
+    //6)redirect
+      redirect(Paths.ACCOUNT_RESERVATION)
+}
 
 export async function deleteReservation(bookingId: string){
   const session = await auth();
@@ -63,6 +98,7 @@ export async function deleteReservation(bookingId: string){
       console.error(error);
       throw new Error('Booking could not be deleted');
     }
+
     revalidatePath(Paths.ACCOUNT_RESERVATION)
     // return data;
 }

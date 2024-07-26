@@ -56,7 +56,7 @@ export async function getGuest(email: string | null | undefined): Promise<GuestT
     .single();
   return data;
 }
-export async function getBooking(id: string) {
+export async function getBooking(id: string): Promise<BookingType> {
   const { data, error, count } = await supabase
     .from('bookings')
     .select('*')
@@ -71,7 +71,7 @@ export async function getBooking(id: string) {
   return data;
 }
 
-export async function getBookingsByGuest(guestId: string): Promise<BookingType[]>  {
+export async function getBookingsByGuest(guestId: string): Promise<Omit<BookingType, 'observations'>[]>  {
   // console.log('guestId222', guestId);
 
 const { data, error, count } = await supabase
