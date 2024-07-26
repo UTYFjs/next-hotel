@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Paths } from './_constants/paths';
 
 function NotFound() {
   return (
@@ -7,7 +8,7 @@ function NotFound() {
         This page could not be found :(
       </h1>
       <Link
-        href='/'
+        href={Paths.MAIN}
         className='inline-block bg-accent-500 text-primary-800 px-6 py-3 text-lg'
       >
         Go back home

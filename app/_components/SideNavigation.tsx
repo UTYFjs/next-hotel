@@ -3,21 +3,22 @@ import { CalendarDaysIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link';
 import { SignOutButton } from './SignOutButton';
 import { usePathname } from 'next/navigation';
+import { Paths } from '../_constants/paths';
 
 const navLinks = [
   {
     name: "Home",
-    href: "/account",
+    href: Paths.ACCOUNT,
     icon: <HomeIcon className="h-5 w-5 text-primary-600" />,
   },
   {
     name: "Reservations",
-    href: "/account/reservations",
+    href: Paths.ACCOUNT_RESERVATION,
     icon: <CalendarDaysIcon className="h-5 w-5 text-primary-600" />,
   },
   {
     name: "Guest profile",
-    href: "/account/profile",
+    href: Paths.ACCOUNT_PROFILE,
     icon: <UserIcon className="h-5 w-5 text-primary-600" />,
   },
 ];

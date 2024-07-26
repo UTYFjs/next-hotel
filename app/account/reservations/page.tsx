@@ -1,4 +1,5 @@
 import { ReservationCard } from '@/app/_components/ReservationCard';
+import { Paths } from '@/app/_constants/paths';
 import { bookingMock, BookingType } from '@/app/_types/dataTypes';
 import Link from 'next/link';
 
@@ -18,7 +19,7 @@ export default  function Page(){
       {bookings.length === 0 ? (
         <p className="text-lg">
           You have no reservations yet. Check out our{" "}
-          <Link className="underline text-accent-500" href="/cabins">
+          <Link className="underline text-accent-500" href={Paths.CABINS}>
             luxury cabins &rarr;
           </Link>
         </p>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import bg from '@/public/bg.png'
+import { Paths } from './_constants/paths';
 
 
 export default function Page() {
@@ -20,7 +21,7 @@ export default function Page() {
         Welcome to paradise.
       </h1>
       <Link
-        href="/cabins"
+        href={Paths.CABINS}
         className="bg-accent-500 px-8 py-6 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
       >
         Explore luxury cabins

@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CabinType } from '../_types/dataTypes';
 import { UsersIcon } from "@heroicons/react/24/solid";
 import Link from 'next/link';
+import { Paths } from '../_constants/paths';
 
 export type CabinCardProps = {
   cabin: CabinType
@@ -52,7 +53,7 @@ export const CabinCard = ({ cabin }: CabinCardProps) => {
 
         <div className="bg-primary-950 border-t border-t-primary-800 text-right">
           <Link
-            href={`/cabins/${id}`}
+            href={`${Paths.CABINS}/${id}`}
             className="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900"
           >
             Details & reservation &rarr;
