@@ -23,6 +23,12 @@ export type BookingType = {
   cabins: Pick<CabinType, 'name' | 'image'>;
 };
 
+export type BookingDataType = {
+  startDate: Date;
+  endDate: Date;
+  cabinPrice: number;
+} & Pick<BookingType, 'cabinId' | 'numberNights'>;
+
 export type CountryType = {
   name: string;
   flag: string;
@@ -48,24 +54,3 @@ export type GuestType = {
   countryFlag: string;
   nationalID: string;
 }
-
-// export const bookingMock: BookingType = {
-//   id: 'id booking',
-//   guestId: 'id guest',
-//   startDate: '2024-02-01T11:30:30',
-//   endDate: '2024-05-01T11:30:30',
-//   numNights: 3,
-//   totalPrice: 150,
-//   numGuests: 3,
-//   status: 'status',
-//   created_at: '2024-02-01T11:30:30',
-//   cabins: { name: 'first Cabin', image: '/logo.png' },
-// };
-export const cabinMock: CabinType = {
-  id: 'string',
-  name: 'first Cabin',
-  maxCapacity: 3,
-  regularPrice: 150,
-  discount: 10,
-  image: '/logo.png',
-};

@@ -39,7 +39,7 @@ const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
           <label htmlFor="nationality">Where are you from?</label>
           <div className='relative aspect-square w-10 h-10'>
             <Image
-              src={countryFlag || ''}
+              src={countryFlag}
               fill
               alt="Country flag"
               className="h-5 rounded-md"

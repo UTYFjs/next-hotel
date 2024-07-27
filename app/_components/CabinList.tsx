@@ -3,7 +3,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { getCabins } from '../_lib/data-service'
 import { CabinType } from '../_types/dataTypes'
 import { CabinCard } from './CabinCard'
-import { cabinsFilter, CabinsFilterValue, CabinsFilterValueType } from '../_constants/cabinsFilter'
+import { CabinsFilterValue, CabinsFilterValueType } from '../_constants/cabinsFilter'
 import { getDisplayedCabins } from '../_utils/getDisplayedCabins'
 
 
@@ -12,7 +12,7 @@ type CabinListProps = {
 }
 export const CabinList = async ({filter}: CabinListProps) => {
   // noStore();
-  const cabins: CabinType[] = await getCabins();  //[cabinMock];
+  const cabins: CabinType[] = await getCabins();
 
   if(!cabins.length) return null 
 

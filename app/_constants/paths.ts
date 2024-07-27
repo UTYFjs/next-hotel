@@ -7,4 +7,5 @@ export const enum Paths {
   ACCOUNT_RESERVATION = '/account/reservations',
   ACCOUNT_RESERVATION_EDIT = '/account/reservations/edit',
   LOGIN = '/login',
+  CABINS_THANKS = '/cabins/thanks',
 }

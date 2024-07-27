@@ -1,8 +1,11 @@
+/* eslint-disable @next/next/no-img-element*/
 'use client'
-
 import { User } from 'next-auth';
 import { CabinType } from '../_types/dataTypes';
 import { useReservation } from './ReservationContext';
+import { differenceInDays } from 'date-fns';
+import { createReservation } from '../_lib/actions';
+import { SubmitButton } from './SubmitButton';
 
 type ReservationFormProps = {
   cabin: CabinType
@@ -10,9 +13,25 @@ type ReservationFormProps = {
 }
 
 export const ReservationForm = ({ cabin, user  }: ReservationFormProps) =>  {
-  // CHANGE
-  const {range} = useReservation()
-  const {maxCapacity} = cabin;
+  const {range, resetRange} = useReservation()
+  
+  const {id, maxCapacity, regularPrice, discount } = cabin;
+  let numberNights = 0
+
+  const startDate = range?.from as Date
+  const endDate = range?.to as Date
+  numberNights = differenceInDays(endDate, startDate)
+
+  const cabinPrice = numberNights*( regularPrice-discount);
+  const bookingData = {
+    startDate,
+    endDate,
+    numberNights, 
+    cabinPrice,
+    cabinId: id
+  }
+
+  const createReservationWithData =  createReservation.bind(null, bookingData)
 
   return (
     <div className='scale-[1.01]'>
@@ -20,7 +39,7 @@ export const ReservationForm = ({ cabin, user  }: ReservationFormProps) =>  {
         <p>Logged in as</p>
         <div className='flex gap-4 items-center'>
           <img
-            // Important to display google profile images
+            // Important  referrerPolicy to display google profile images
             referrerPolicy='no-referrer'
             className='h-8 rounded-full'
             src={user.image || ''}
@@ -29,12 +48,17 @@ export const ReservationForm = ({ cabin, user  }: ReservationFormProps) =>  {
           <p>{user.name}</p>
         </div>
       </div>
-      <form className='bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col'>
+      <form 
+      action={async (formData) => { 
+        await createReservationWithData(formData);
+        resetRange();
+      }}
+       className='bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col'>
         <div className='space-y-2'>
           <label htmlFor='numGuests'>How many guests?</label>
           <select
-            name='numGuests'
-            id='numGuests'
+            name='numberGuests'
+            id='numberGuests'
             className='px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm'
             required
           >
@@ -55,6 +79,7 @@ export const ReservationForm = ({ cabin, user  }: ReservationFormProps) =>  {
           </label>
           <textarea
             name='observations'
+            maxLength={1000}
             id='observations'
             className='px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm'
             placeholder='Any pets, allergies, special requirements, etc.?'
@@ -62,11 +87,9 @@ export const ReservationForm = ({ cabin, user  }: ReservationFormProps) =>  {
         </div>
 
         <div className='flex justify-end items-center gap-6'>
-          <p className='text-primary-300 text-base'>Start by selecting dates</p>
-
-          <button className='bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300'>
-            Reserve now
-          </button>
+          {(startDate && endDate) ? <SubmitButton pendingLabel='Reserving ...'> Reserve now</SubmitButton> : 
+              <p className='text-primary-300 text-lg py-4'>Start by selecting dates</p>
+          }
         </div>
       </form>
     </div>

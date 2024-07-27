@@ -4,7 +4,7 @@ import { auth, signIn, signOut } from './auth';
 import { supabase } from './supabase';
 import { Paths } from '../_constants/paths';
 import { getBookingsByGuest } from './data-service';
-import { BookingType } from '../_types/dataTypes';
+import { BookingDataType, BookingType } from '../_types/dataTypes';
 import { redirect } from 'next/navigation';
 
 export async function signInAction() {
@@ -60,36 +60,33 @@ export async function updateReservation( bookingData: FormData ){
   const numGuests = Number(bookingData.get('numGuests'));
   const updatedFields: Partial<BookingType> = { observations, numGuests  };
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('bookings')
     .update(updatedFields)
     .eq('id', bookingId)
 // 4) error handling
-    if (error) {
-      console.error(error);
-      throw new Error('Booking could not be updated');
-    }
-
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not be updated');
+  }
     //5) revalidation
-      revalidatePath(`${Paths.ACCOUNT_RESERVATION_EDIT}/${bookingId}`);
-      revalidatePath(Paths.ACCOUNT_RESERVATION);
+  revalidatePath(`${Paths.ACCOUNT_RESERVATION_EDIT}/${bookingId}`);
+  revalidatePath(Paths.ACCOUNT_RESERVATION);
     //6)redirect
-      redirect(Paths.ACCOUNT_RESERVATION)
+  redirect(Paths.ACCOUNT_RESERVATION)
 }
 
 export async function deleteReservation(bookingId: string){
   const session = await auth();
   if(!session) throw new Error("You must be logged in for delete reservation")
 
-
-  const guestBookings = session?.user?.id ? await getBookingsByGuest(session.user.id) : [];
+    const guestBookings = session?.user?.id ? await getBookingsByGuest(session.user.id) : [];
   const guestBookingIds = guestBookings.map((booking) => booking.id);
-
 
   if (!guestBookingIds.includes(bookingId))
     throw new Error('You are not allowed to delete this booking');
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('bookings')
       .delete()
       .eq('id', bookingId);
@@ -100,5 +97,39 @@ export async function deleteReservation(bookingId: string){
     }
 
     revalidatePath(Paths.ACCOUNT_RESERVATION)
-    // return data;
+    // todo revalidate path cabinId
+    // revalidatePath(`${Paths.CABINS}/${}`);
+}
+
+export async function createReservation(
+  bookingData: BookingDataType,
+  formData: FormData
+) {
+  const session = await auth();
+  if (!session) throw new Error('You must be logged in for create reservation');
+
+  const newBookingData = {
+    ...bookingData,
+    observations: formData.get('observations')?.slice(0, 1000),
+    numGuests: Number(formData.get('numberGuests')),
+    guestId: session.user?.id,
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: 'unconfirmed',
+  };
+
+  const { error } = await supabase
+    .from('bookings')
+    .insert([newBookingData])
+
+
+  if (error) {
+    console.error(error);
+    throw new Error('Booking could not be created');
+  }
+  revalidatePath(Paths.ACCOUNT_RESERVATION);
+  revalidatePath(`${Paths.CABINS}/${bookingData.cabinId}`);
+  redirect(Paths.CABINS_THANKS);
 }
