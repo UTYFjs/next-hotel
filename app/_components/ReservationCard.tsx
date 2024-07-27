@@ -5,7 +5,6 @@ import { BookingType } from '../_types/dataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Paths } from '../_constants/paths';
-import { deleteReservation } from '../_lib/actions';
 
 
 export const formatDistanceFromNow = (dateStr: string) =>
@@ -14,9 +13,10 @@ export const formatDistanceFromNow = (dateStr: string) =>
   }).replace("about ", "");
 
   type ReservationCardProps = {
-    booking: Omit<BookingType, 'observations'>
+    booking: Omit<BookingType, 'observations'>;
+    onDelete: (bookingId: string) => Promise<void>
   }
-export const ReservationCard = ({ booking }:ReservationCardProps) => {
+export const ReservationCard = ({ booking, onDelete }:ReservationCardProps) => {
   const {
     id,
     guestId,
@@ -87,7 +87,7 @@ export const ReservationCard = ({ booking }:ReservationCardProps) => {
           <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
           <span className="mt-1">Edit</span>
         </Link>
-            <DeleteReservation bookingId={id} onDelete={deleteReservation} /> </>
+            <DeleteReservation bookingId={id} onDelete={onDelete} /> </>
           : null}
       </div>
     </div>
