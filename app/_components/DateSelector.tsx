@@ -4,21 +4,26 @@ import "react-day-picker/dist/style.css";
 import { CabinType, SettingsType } from '../_types/dataTypes';
 import { useState } from 'react';
 import { useReservation } from './ReservationContext';
-import { differenceInDays } from 'date-fns';
+import { differenceInDays, isEqual, isPast, isSameDay, isWithinInterval } from 'date-fns';
 
 type DateSelectorProps = {
   settings: SettingsType; 
-  bookedDates: any[]; 
+  bookedDates: Date[]; 
   cabin: CabinType;
 }
-// type RangeStateType ={
-//    from: undefined | Date;
-//      to: undefined | Date;
-//     }
+
+const isAlreadyBooked = (range: DateRange | undefined, datesArr: Date[]) =>{
+  console.log('datesArr', datesArr);
+  return (range && range.from && 
+    range.to && 
+    datesArr.some((date) => isWithinInterval(date, {start: range.from as Date, end: range.to as Date}))
+  )
+
+}
 export const DateSelector = ({ settings, bookedDates, cabin }: DateSelectorProps) =>  {
   //const [range, setRange] = useState<DateRange | undefined>({from: undefined, to: undefined})
   const {range, setRange, resetRange} = useReservation()
- 
+  const displayRange = isAlreadyBooked(range, bookedDates) ? undefined : range
   // CHANGE
   const {regularPrice, discount} = cabin
 
@@ -54,12 +59,18 @@ export const DateSelector = ({ settings, bookedDates, cabin }: DateSelectorProps
           }
 
           }}
-        selected={range}
+        selected={displayRange}
         fromMonth={new Date()}
         fromDate={new Date()}
         toYear={new Date().getFullYear() + 5}
         captionLayout="dropdown"
         numberOfMonths={2}
+        //todo rewrite disabled
+        disabled={(curr)=>{
+          if(isPast(curr)) return true
+          if(bookedDates.some(date => isSameDay(date, curr))) return true
+          return false
+        }}
       />
 
       <div className="flex items-center justify-between px-8 bg-accent-500 text-primary-800 h-[72px]">
