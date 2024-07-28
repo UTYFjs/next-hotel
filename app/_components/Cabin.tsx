@@ -10,42 +10,43 @@ export const Cabin = ({cabin}:CabinProps) => {
     cabin;
 
   return (
-    <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
-      <div className="relative scale-[1.15] -translate-x-3">
+    <div className="relative grid sm:grid-cols-[3fr_4fr] gap-2 sm:gap-20 border border-primary-800 sm:py-3 sm:px-10 mb-4 sm:mb-24">
+      <div className="absolute w-[100%] aspect-square max-h-80 sm:max-h-full sm:relative sm:scale-[1.15] sm:-translate-x-3">
         <Image className='object-cover' src={image} fill alt={`Cabin ${name}`} />
       </div>
 
-      <div>
-        <h3 className="text-accent-100 font-black text-7xl mb-5 translate-x-[-254px] bg-primary-950 p-6 pb-1 w-[150%]">
+      <div className='relative z-3'>
+        <h3 className="text-accent-100 font-black text-2xl sm:text-7xl mb-64 sm:mb-5 sm:translate-x-[-254px] bg-primary-950 p-6 bg-opacity-80 pb-1 sm:w-[150%]">
           Cabin {name}
         </h3>
-
-        <p className="text-lg text-primary-300 mb-10">
+        <div className='px-2 py-2 sm:py-0 sm:px-0 '>        
+          <p className="text-lg text-primary-300 mb-4 sm:mb-10">
           <TextExpander>{description}</TextExpander>
-        </p>
+          </p>
 
-        <ul className="flex flex-col gap-4 mb-7">
-          <li className="flex gap-3 items-center">
-            <UsersIcon className="h-5 w-5 text-primary-600" />
-            <span className="text-lg">
-              For up to <span className="font-bold">{maxCapacity}</span>{" "}
-              guests
-            </span>
-          </li>
-          <li className="flex gap-3 items-center">
-            <MapPinIcon className="h-5 w-5 text-primary-600" />
-            <span className="text-lg">
-              Located in the heart of the{" "}
-              <span className="font-bold">Dolomites</span> (Italy)
-            </span>
-          </li>
-          <li className="flex gap-3 items-center">
-            <EyeSlashIcon className="h-5 w-5 text-primary-600" />
-            <span className="text-lg">
-              Privacy <span className="font-bold">100%</span> guaranteed
-            </span>
-          </li>
-        </ul>
+          <ul className="flex flex-col gap-2 sm:gap-4 mb-2 sm:mb-7">
+            <li className="flex gap-3 items-center">
+              <UsersIcon className="h-5 w-5 text-primary-600" />
+              <span className="text-lg">
+                For up to <span className="font-bold">{maxCapacity}</span>{" "}
+                guests
+              </span>
+            </li>
+            <li className="flex gap-3 items-center">
+              <MapPinIcon className="h-5 w-5 text-primary-600" />
+              <span className="text-lg">
+                Located in the heart of the{" "}
+                <span className="font-bold">Dolomites</span> (Italy)
+              </span>
+            </li>
+            <li className="flex gap-3 items-center">
+              <EyeSlashIcon className="h-5 w-5 text-primary-600" />
+              <span className="text-lg">
+                Privacy <span className="font-bold">100%</span> guaranteed
+              </span>
+            </li>
+          </ul></div>
+
       </div>
     </div>
   )

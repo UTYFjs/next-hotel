@@ -4,18 +4,15 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { CabinsFilterValue, CabinsFilterValueType } from '../_constants/cabinsFilter'
 
 export const Filter = () => {
- const searchParams =  useSearchParams();
- const router = useRouter();
- const path = usePathname()
-
- console.log('searchParams', searchParams);
- 
+  const searchParams =  useSearchParams();
+  const router = useRouter();
+  const path = usePathname()
+  
   const activeFilter = searchParams.get('capacity') as CabinsFilterValueType ?? CabinsFilterValue.ALL
 
-const handleFilter = (filter: CabinsFilterValueType) => {
+  const handleFilter = (filter: CabinsFilterValueType) => {
   const params = new URLSearchParams(searchParams)
   params.set('capacity', filter);
-  console.log('params Filter', params)
   router.replace(`${path}?${params.toString()}`, {scroll: false})
 }
 
@@ -25,7 +22,6 @@ const handleFilter = (filter: CabinsFilterValueType) => {
         filter={CabinsFilterValue.ALL}
         handleFilter={handleFilter}
         activeFilter={activeFilter}
-
       >
         All cabins
       </Button>
@@ -62,7 +58,7 @@ type ButtonProps = {
 
 const Button = ({ filter, handleFilter, activeFilter,  children }: ButtonProps) => {
   return (<button 
-    className={`px-5 py-2 hover:bg-primary-700 ${activeFilter === filter && 'bg-primary-700'}`}
+    className={`px-[6px] py-1 sm:px-5 sm:py-2 text-sm hover:bg-primary-700 ${activeFilter === filter && 'bg-primary-700'}`}
     onClick={() => handleFilter(filter)}
   >
     {children}

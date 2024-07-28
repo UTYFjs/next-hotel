@@ -7,7 +7,7 @@ export default function AccountLayout({
 }) {
   return (
     
-        <section className='grid grid-cols-[11rem_1fr] h-full gap-12'>
+        <section className='flex flex-col mt-3 sm:mt-0 ml-[-10px] sm:ml-0 sm:grid  sm:grid-cols-[11rem_1fr] sm:h-full sm:gap-12'>
           <SideNavigation/>
           <div className=''>
           {children}

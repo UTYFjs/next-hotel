@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${josefin.className} antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col`}>
         <Header/>
-        <main className=' grid flex-1 max-w-7xl mx-auto py-10 px-5 w-full'>
+        <main className=' grid flex-1 max-w-7xl mx-auto sm:py-10 px-5 w-full'>
           <ReservationProvider>{children}</ReservationProvider>
         </main>
         <footer className='mx-auto mb-3'>Copyright by the Wildhood Oasis</footer>

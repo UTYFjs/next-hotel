@@ -5,14 +5,12 @@ import { Paths } from '../_constants/paths';
 
 export default async function Navigation(){
  const session = await auth()
-//  console.log('session', session)
-
 
   return <nav className='z-10'>
-    <ul className='flex gap-5 text-xl mx-10'>
-    <li>
+    <ul className='flex gap-4 sm:gap-5 text-lg sm:text-xl mx-2 sm:mx-10'>
+    {/* <li>
         <Link href={Paths.MAIN} className='hover:text-accent-400 transition-colors'>Home</Link>
-    </li>
+    </li> */}
     <li>
         <Link href={Paths.CABINS} className='hover:text-accent-400 transition-colors'>Cabins</Link>
     </li>

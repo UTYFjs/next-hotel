@@ -72,7 +72,6 @@ export async function getBooking(id: string): Promise<BookingType> {
 }
 
 export async function getBookingsByGuest(guestId: string): Promise<Omit<BookingType, 'observations'>[]>  {
-  // console.log('guestId222', guestId);
 
 const { data, error, count } = await supabase
   .from('bookings')

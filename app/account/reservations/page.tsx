@@ -12,11 +12,10 @@ export const metadata = {
 export default async function Page(){
   const session = await auth();
   const bookings = session?.user?.id ? await getBookingsByGuest(session?.user?.id): [];
-// console.log('booking', bookings)
 
   return (
     <div>
-      <h2 className="font-semibold text-2xl text-accent-400 mb-7">
+      <h2 className="font-semibold text-center sm:text-start text-2xl text-accent-400 mb-3 sm:mb-7">
         Your reservations
       </h2>
 

@@ -19,12 +19,12 @@ export default async function Page({ params }: PageEditBookingProps) {
 
   return (
     <div>
-      <h2 className="font-semibold text-2xl text-accent-400 mb-7">
+      <h2 className="font-semibold text-center sm:text-start text-2xl text-accent-400 mb-7">
         Edit Reservation #{bookingId}
       </h2>
       <form
         action={updateReservation}
-        className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+        className="bg-primary-900 py-4 sm:py-8 px-5 sm:px-12 text-lg flex gap-6 flex-col"
       >
         <input type="hidden" value={bookingId} name="bookingId" />
         <div className="space-y-2">
@@ -53,11 +53,12 @@ export default async function Page({ params }: PageEditBookingProps) {
           <textarea
             name="observations"
             defaultValue={observations}
+            rows={5}
             maxLength={1000}
             className="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
           />
         </div>
-        <div className="flex justify-end items-center gap-6">
+        <div className="flex justify-center sm:justify-end items-center gap-6">
           <SubmitButton pendingLabel="Updating...">
             Update reservation
           </SubmitButton>
