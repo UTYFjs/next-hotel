@@ -13,7 +13,7 @@ const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
   const {fullName, email, nationality, nationalID, countryFlag} = guest
 
   return (
-    <form action={updateProfile} className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
+    <form action={updateProfile} className="bg-primary-900 py-8 px-5 sm:px-12 text-lg flex gap-6 flex-col">
       <div className="space-y-2">
         <label>Full name</label>
         <input
@@ -69,7 +69,7 @@ const UpdateProfileForm = ({guest, children }: UpdateProfileFormProps) => {
 function Button() {
   const {pending} = useFormStatus();
 
-  return (<button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
+  return (<button className="bg-accent-500 w-full sm:w-auto sm:px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300"
   disabled={pending}>
     {pending? 'Updating...' : 'Update profile'}
   </button>)

@@ -7,7 +7,6 @@ const authConfig = {
   providers: [Google],
   callbacks: {
     authorized({ auth, request }) {
-      console.log('auth from authorized', auth);
       return !!auth?.user;
     },
     async signIn({user, account, profile}){

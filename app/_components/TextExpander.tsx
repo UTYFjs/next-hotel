@@ -7,7 +7,6 @@ type TextExpanderProps = {
 function TextExpander({ children }:TextExpanderProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   if(children === null) return null;
-  console.log('children', children);
   const displayText = isExpanded
     ? children
     : children.split(' ').slice(0, 40).join(' ') + '...';
@@ -16,7 +15,7 @@ function TextExpander({ children }:TextExpanderProps) {
     <span>
       {displayText}{' '}
       <button
-        className='text-primary-700 border-b border-primary-700 leading-3 pb-1'
+        className='text-primary-700 border-b border-primary-700 leading-3  py-1'
         onClick={() => setIsExpanded(!isExpanded)}
       >
         {isExpanded ? 'Show less' : 'Show more'}

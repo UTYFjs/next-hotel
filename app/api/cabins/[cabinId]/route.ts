@@ -5,8 +5,6 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { cabinId: string } }
 ) {
-  console.log('request request handlers', request);
-  console.log('params', params);
   const { cabinId } = params;
   try {
     const [cabin, bookedDates] = await Promise.all([
